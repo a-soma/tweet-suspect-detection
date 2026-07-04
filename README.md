@@ -5,11 +5,11 @@
 
 ---
 
-##  Résultats obtenus (dataset réel — 60 000 tweets)
+##  Résultats obtenus (dataset réel - 60 000 tweets)
 
 | Modèle | Accuracy | F1 | AUC |
 |---|---|---|---|
-| Random Forest ★ | 0.909 | 0.844 | 0.932 |
+| Random Forest | 0.909 | 0.844 | 0.932 |
 | SVM Linéaire | 0.881 | 0.820 | 0.925 |
 | Régression Logistique | 0.863 | 0.787 | 0.905 |
 | Naive Bayes | 0.823 | 0.753 | 0.895 |
@@ -18,7 +18,7 @@
 
 ---
 
-## 🏗️ Structure du projet
+## Structure du projet
 
 ```
 tweet-suspect-detection/
