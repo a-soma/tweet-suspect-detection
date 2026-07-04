@@ -1,98 +1,252 @@
-# Détection de Tweets Suspects - Alassane SOMA
+# Détection de Tweets Suspects avec Machine Learning
 
-**Université Virtuelle du Burkina Faso (UV-BF) | Examen Final Machine Learning | 2026**  
+**Université Virtuelle du Burkina Faso (UV-BF)**  
+**Examen Final – Machine Learning & MLOps (Git + DVC)**  
+**Année académique : 2025–2026**
+
+**Auteur : Alassane SOMA**  
 **Encadrant : Dr. Abdoul Kader KABORE**
 
 ---
 
-##  Résultats obtenus (dataset réel - 60 000 tweets)
+# Présentation du projet
 
-| Modèle | Accuracy | F1 | AUC |
-|---|---|---|---|
-| Random Forest | 0.909 | 0.844 | 0.932 |
-| SVM Linéaire | 0.881 | 0.820 | 0.925 |
-| Régression Logistique | 0.863 | 0.787 | 0.905 |
-| Naive Bayes | 0.823 | 0.753 | 0.895 |
+Ce projet consiste à développer une solution de **classification automatique de tweets suspects** à partir d'un jeu de données de **60 000 tweets**.
 
- Modèle retenu pour le déploiement
+L'objectif est de mettre en œuvre un pipeline complet de Machine Learning comprenant :
+
+- l'exploration et le prétraitement des données textuelles ;
+- la vectorisation des tweets avec **TF-IDF** ;
+- la gestion du déséquilibre des classes avec **SMOTE** ;
+- la comparaison de plusieurs algorithmes de classification ;
+- l'évaluation des performances ;
+- le déploiement d'une application **Streamlit** ;
+- la reproductibilité du projet grâce à **Git** et **DVC**.
 
 ---
 
-## Structure du projet
+# Résultats obtenus
 
-```
+Les modèles suivants ont été entraînés et comparés.
+
+| Modèle | Accuracy | Precision | Recall | F1-score | Validation croisée |
+|---------|---------:|----------:|--------:|---------:|-------------------:|
+| Régression Logistique | 0.850 | 0.782 | 0.923 | 0.846 | 0.863 ± 0.005 |
+| Naive Bayes | 0.815 | 0.809 | 0.769 | 0.788 | 0.806 ± 0.007 |
+| SVM Linéaire | **0.895** | 0.848 | 0.933 | **0.889** | 0.901 ± 0.005 |
+| **Random Forest** | 0.893 | 0.834 | **0.951** | **0.889** | **0.904 ± 0.003** |
+
+## Modèle retenu
+
+Le modèle **Random Forest** a été retenu pour le déploiement, car il présente les meilleures performances globales en validation croisée tout en offrant un excellent compromis entre précision, rappel et F1-score.
+
+---
+
+# Structure du projet
+
+```text
 tweet-suspect-detection/
-├── data/
-│   └── tweets_suspect.csv          # Dataset réel (60 000 tweets)
-├── src/
-│   ├── preprocess.py               # Nettoyage et prétraitement
-│   ├── train.py                    # Entraînement des 4 modèles
-│   └── evaluate.py                 # Rapport de performance
-├── models/
-│   ├── best_model.pkl              # Meilleur modèle sérialisé
-│   ├── tfidf_vectorizer.pkl        # Vectoriseur TF-IDF
-│   └── results.json                # Métriques JSON
-├── reports/
-│   └── fig1 à fig6.png             # Visualisations
+│
 ├── app/
-│   └── streamlit_app.py            # Application de déploiement
-├── Notebook.ipynb                  # Notebook Colab complet
-├── dvc.yaml                        # Pipeline DVC
-├── requirements.txt                # Dépendances Python
+│   └── streamlit_app.py
+│
+├── data/
+│   ├── tweets_suspect.csv
+│   └── tweets_preprocessed.csv
+│
+├── models/
+│   ├── best_model.pkl
+│   ├── tfidf_vectorizer.pkl
+│   └── results.json
+│
+├── reports/
+│   ├── fig1_distribution.png
+│   ├── fig2_longueur.png
+│   ├── fig3_top_mots.png
+│   ├── fig4_comparaison.png
+│   ├── fig5_confusion.png
+│   └── fig6_roc.png
+│
+├── src/
+│   ├── preprocess.py
+│   ├── train.py
+│   └── evaluate.py
+│
+├── Notebook.ipynb
+├── dvc.yaml
+├── requirements.txt
 └── README.md
 ```
 
 ---
 
-## Installation et utilisation
+# Technologies utilisées
 
-### 1. Cloner le dépôt
+- Python 3.11
+- Pandas
+- NumPy
+- Scikit-learn
+- NLTK
+- Imbalanced-learn (SMOTE)
+- Matplotlib
+- Streamlit
+- Git
+- DVC
+
+---
+
+# Installation
+
+## 1. Cloner le dépôt
+
 ```bash
 git clone https://github.com/a-soma/tweet-suspect-detection.git
+
 cd tweet-suspect-detection
 ```
 
-### 2. Installer les dépendances
+## 2. Créer un environnement virtuel
+
+```bash
+python -m venv .venv
+```
+
+Activation sous Windows :
+
+```bash
+.\.venv\Scripts\Activate
+```
+
+## 3. Installer les dépendances
+
 ```bash
 pip install -r requirements.txt
 ```
 
-### 3. Reproduire le pipeline DVC
+---
+
+# Exécution du projet
+
+## Prétraitement
+
 ```bash
-dvc pull        # Télécharger données et modèles
-dvc repro       # Relancer le pipeline complet
+python src/preprocess.py
 ```
 
-### 4. Lancer l'application Streamlit
+Cette étape produit :
+
+```
+data/tweets_preprocessed.csv
+```
+
+---
+
+## Entraînement
+
+```bash
+python src/train.py
+```
+
+Cette étape génère :
+
+- best_model.pkl
+- tfidf_vectorizer.pkl
+- results.json
+
+---
+
+## Évaluation
+
+```bash
+python src/evaluate.py
+```
+
+Le script affiche un rapport comparatif des performances des modèles.
+
+---
+
+## Déploiement Streamlit
+
 ```bash
 streamlit run app/streamlit_app.py
 ```
 
-### 5. Ou utiliser directement le notebook Colab
-Ouvrir `notebook.ipynb` sur [Google Colab](https://colab.research.google.com)
+L'application est ensuite accessible à l'adresse :
+
+```
+http://localhost:8501
+```
+
+Elle permet :
+
+- de saisir un tweet ;
+- d'obtenir la prédiction ;
+- d'afficher la probabilité associée.
 
 ---
 
-##  Pipeline DVC
+# Reproductibilité avec DVC
 
-```
+Le pipeline est organisé selon les étapes suivantes :
+
+```text
 tweets_suspect.csv
-       │
-       ▼
-  [preprocess]  →  tweets_preprocessed.csv
-       │
-       ▼
-    [train]     →  best_model.pkl + results.json
-       │
-       ▼
-  [evaluate]    →  Rapport de performance
+        │
+        ▼
+Prétraitement
+(preprocess.py)
+        │
+        ▼
+tweets_preprocessed.csv
+        │
+        ▼
+Entraînement
+(train.py)
+        │
+        ▼
+best_model.pkl
+results.json
+        │
+        ▼
+Évaluation
+(evaluate.py)
+```
+
+Pour reproduire le projet :
+
+```bash
+dvc pull
+
+dvc repro
 ```
 
 ---
 
-##  Auteur
+# Visualisations
 
-**SOMA Alassane**  
-Statisticien, chercheur, étudiant - Université Virtuelle du Burkina Faso (UV-BF)  
-GitHub : [a-soma](https://github.com/a-soma)  
-Encadrant : Dr. Abdoul Kader KABORE
+Le dossier `reports/` contient notamment :
+
+- Distribution des classes
+- Longueur des tweets
+- Nuage des mots les plus fréquents
+- Comparaison des modèles
+- Matrice de confusion
+- Courbe ROC
+
+---
+
+# Auteur
+
+**Alassane SOMA**
+
+Statisticien • Data Scientist • Chercheur en statistique appliquée et économétrie
+
+Université Virtuelle du Burkina Faso (UV-BF)
+
+GitHub : https://github.com/a-soma
+
+---
+
+## Remerciements
+
+Mes remerciements vont à **Dr. Abdoul Kader KABORE** pour son encadrement et ses conseils dans le cadre de cet exercice.
