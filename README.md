@@ -36,7 +36,7 @@ tweet-suspect-detection/
 │   └── fig1 à fig6.png             # Visualisations
 ├── app/
 │   └── streamlit_app.py            # Application de déploiement
-├── notebook_corrige_alassane_soma.ipynb   # Notebook Colab complet
+├── Notebook.ipynb                  # Notebook Colab complet
 ├── dvc.yaml                        # Pipeline DVC
 ├── requirements.txt                # Dépendances Python
 └── README.md
