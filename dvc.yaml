@@ -1,0 +1,26 @@
+stages:
+  preprocess:
+    cmd: python src/preprocess.py data/tweets_dataset.csv data/tweets_preprocessed.csv
+    deps:
+      - src/preprocess.py
+      - data/tweets_dataset.csv
+    outs:
+      - data/tweets_preprocessed.csv
+
+  train:
+    cmd: python src/train.py data/tweets_preprocessed.csv models/
+    deps:
+      - src/train.py
+      - data/tweets_preprocessed.csv
+    outs:
+      - models/best_model.pkl
+      - models/tfidf_vectorizer.pkl
+    metrics:
+      - models/results.json:
+          cache: false
+
+  evaluate:
+    cmd: python src/evaluate.py models/results.json
+    deps:
+      - src/evaluate.py
+      - models/results.json
