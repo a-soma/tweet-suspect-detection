@@ -1,7 +1,7 @@
-# Détection de Tweets Suspects avec Machine Learning
+# Détection de tweets suspects avec Machine Learning
 
 **Université Virtuelle du Burkina Faso (UV-BF)**  
-**Examen Final - Machine Learning & MLOps (Git + DVC)**  
+**Examen Final – Machine Learning & MLOps (Git + DVC)**  
 **Année académique : 2025–2026**
 
 **Auteur : Alassane SOMA**  
@@ -9,38 +9,39 @@
 
 ---
 
-## Démonstration en ligne
+# Démonstration en ligne
 
-**Application Streamlit :**
+## Application Streamlit
 
 **https://tweetsuspectdetection.streamlit.app**
 
-L'application permet :
+L'application permet de :
 
-- d'entrer un tweet en anglais ;
-- d'obtenir une prédiction (*Suspect* ou *Non suspect*) ;
-- d'afficher la probabilité associée à la prédiction.
-
----
-
-## Présentation du projet
-
-Ce projet consiste à développer une solution de **classification automatique de tweets suspects** à partir d'un jeu de données de **60 000 tweets**.
-
-L'objectif est de mettre en œuvre un pipeline complet de Machine Learning comprenant :
-
-- l'analyse exploratoire des données ;
-- le prétraitement des tweets ;
-- la représentation TF-IDF ;
-- la gestion du déséquilibre des classes avec SMOTE ;
-- la comparaison de plusieurs modèles de classification ;
-- l'évaluation des performances ;
-- le déploiement d'une application web avec Streamlit ;
-- la reproductibilité avec Git et DVC.
+- saisir un tweet en anglais ;
+- prédire automatiquement s'il est **Suspect** ou **Non suspect** ;
+- afficher la probabilité associée à la prédiction.
 
 ---
 
-## Résultats obtenus
+# Présentation du projet
+
+Ce projet met en œuvre une chaîne complète de **Machine Learning** pour la **détection automatique de tweets suspects** à partir d'un jeu de données réel contenant **60 000 tweets**.
+
+Le pipeline couvre toutes les étapes d'un projet de science des données :
+
+- exploration et analyse des données ;
+- prétraitement des tweets ;
+- vectorisation TF-IDF ;
+- équilibrage des classes avec SMOTE ;
+- entraînement et comparaison de plusieurs modèles ;
+- évaluation des performances ;
+- déploiement d'une application web avec Streamlit ;
+- gestion de versions avec Git ;
+- reproductibilité des expériences avec DVC.
+
+---
+
+# Résultats obtenus
 
 | Modèle | Accuracy | Precision | Recall | F1-score | Validation croisée |
 |---------|---------:|----------:|--------:|---------:|-------------------:|
@@ -49,51 +50,45 @@ L'objectif est de mettre en œuvre un pipeline complet de Machine Learning compr
 | SVM Linéaire | **0.895** | 0.848 | 0.933 | **0.889** | 0.901 ± 0.005 |
 | **Random Forest** | 0.893 | 0.834 | **0.951** | **0.889** | **0.904 ± 0.003** |
 
-### Modèle retenu
+## Modèle retenu
 
-Le modèle **Random Forest** a été retenu pour le déploiement grâce à ses excellentes performances globales.
+Le modèle **Random Forest** a été retenu pour le déploiement en raison de ses excellentes performances globales et de sa meilleure validation croisée.
 
 ---
 
-## Structure du projet
+# Structure du projet
 
 ```text
 tweet-suspect-detection/
-├── .dvc/
-│   ├── .gitignore
-│   └── config
 │
+├── .dvc/
 ├── app/
 │   └── streamlit_app.py
 ├── data/
-│   ├── tweets_suspect.csv
-│   └── tweets_preprocessed.csv
+│   ├── tweets_suspect.csv.dvc
+│   ├── tweets_preprocessed.csv
+│   └── .gitignore
 ├── models/
-│   ├── best_model.pkl
-│   ├── tfidf_vectorizer.pkl
-│   └── results.json
+│   ├── results.json
+│   └── .gitignore
 ├── reports/
-│   ├── fig1_distribution.png
-│   ├── fig2_longueur.png
-│   ├── fig3_top_mots.png
-│   ├── fig4_comparaison.png
-│   ├── fig5_confusion.png
-│   └── fig6_roc.png
 ├── src/
 │   ├── preprocess.py
 │   ├── train.py
 │   └── evaluate.py
 ├── Notebook.ipynb
+├── dvc.lock
 ├── dvc.yaml
+├── README.md
 ├── requirements.txt
-└── README.md
 └── .dvcignore
-
 ```
+
+> Les fichiers volumineux (`tweets_suspect.csv`, `best_model.pkl` et `tfidf_vectorizer.pkl`) sont gérés par **DVC** afin de conserver un dépôt Git léger et reproductible.
 
 ---
 
-## Technologies utilisées
+# Technologies utilisées
 
 - Python 3.11
 - Pandas
@@ -108,32 +103,61 @@ tweet-suspect-detection/
 
 ---
 
-## Installation
+# Installation
 
+Clonage du projet depuis github
 ```bash
 git clone https://github.com/a-soma/tweet-suspect-detection.git
-
+```
+Paramettrage de chemin d'acces
+```bash
 cd tweet-suspect-detection
+```
 
+Creation d'environnement virtuel
+```bash
+python -m venv .venv
+```
+oubien
+```bash
 py -m venv .venv
+```
 
-or
+Sous Windows :
 
-python -m venv .venv 
-
-# Windows
-.\.venv\Scripts\Activate
-
-or
-
+```bash
+.venv\Scripts\activate
+```
+ou bien
+```bash
 .\.venv\Scripts\Activate.ps1
+```
 
+Installer les dépendances :
+
+```bash
 pip install -r requirements.txt
 ```
 
 ---
 
-## Exécution
+# Reproduire entièrement le projet
+
+Télécharger les fichiers suivis par DVC :
+
+```bash
+dvc pull
+```
+
+Reconstruire automatiquement le pipeline :
+
+```bash
+dvc repro
+```
+
+---
+
+# Exécution manuelle
 
 Prétraitement
 
@@ -161,30 +185,52 @@ streamlit run app/streamlit_app.py
 
 ---
 
-## Reproductibilité avec DVC
+# Pipeline DVC
 
-```bash
-dvc pull
-
-dvc repro
+```text
+tweets_suspect.csv
+        │
+        ▼
+Preprocessing
+        │
+        ▼
+tweets_preprocessed.csv
+        │
+        ▼
+Training
+        │
+        ├── best_model.pkl
+        ├── tfidf_vectorizer.pkl
+        └── results.json
+        │
+        ▼
+Evaluation
 ```
 
 ---
 
-## Visualisations
+# Visualisations
 
-Le dossier **reports/** contient :
+Le dossier **reports/** contient notamment :
 
-- Distribution des classes
-- Longueur des tweets
-- Mots les plus fréquents
-- Comparaison des modèles
-- Matrice de confusion
-- Courbe ROC
+- Distribution des classes ;
+- Longueur des tweets ;
+- Mots les plus fréquents ;
+- Comparaison des modèles ;
+- Matrice de confusion ;
+- Courbe ROC.
 
 ---
 
-## Auteur
+# Démonstration
+
+**Application Streamlit**
+
+https://tweetsuspectdetection.streamlit.app
+
+---
+
+# Auteur
 
 **Alassane SOMA**
 
@@ -192,12 +238,14 @@ Statisticien • Data Scientist • Chercheur en Statistique Appliquée et Écon
 
 GitHub : https://github.com/a-soma
 
+Projet GitHub : https://github.com/a-soma/tweet-suspect-detection
+
 Application Streamlit : https://tweetsuspectdetection.streamlit.app
 
 Université Virtuelle du Burkina Faso (UV-BF)
 
 ---
 
-## Remerciements
+# Remerciements
 
-Je remercie **Dr. Abdoul Kader KABORE** pour son encadrement dans le cadre de cet examen final de Machine Learning.
+Mes sincères remerciements à **Dr. Abdoul Kader KABORE** pour son accompagnement et ses conseils dans le cadre de cet examen final de Machine Learning et MLOps.
