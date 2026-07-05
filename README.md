@@ -43,12 +43,12 @@ Le pipeline couvre toutes les étapes d'un projet de science des données :
 
 # Résultats obtenus
 
-| Modèle | Accuracy | Precision | Recall | F1-score | Validation croisée |
-|---------|---------:|----------:|--------:|---------:|-------------------:|
-| Régression Logistique | 0.850 | 0.782 | 0.923 | 0.846 | 0.863 ± 0.005 |
-| Naive Bayes | 0.815 | 0.809 | 0.769 | 0.788 | 0.806 ± 0.007 |
-| SVM Linéaire | **0.895** | 0.848 | 0.933 | **0.889** | 0.901 ± 0.005 |
-| **Random Forest** | 0.893 | 0.834 | **0.951** | **0.889** | **0.904 ± 0.003** |
+| Modèle                |  Accuracy | Precision |    Recall |  F1-score | Validation croisée |
+| --------------------- | --------: | --------: | --------: | --------: | -----------------: |
+| Régression Logistique |     0.872 |     0.849 |     0.749 |     0.796 |      0.880 ± 0.005 |
+| Naive Bayes           |     0.824 |     0.706 |     0.806 |     0.753 |      0.868 ± 0.003 |
+| SVM Linéaire          |     0.886 |     0.835 | **0.820** |     0.827 |      0.919 ± 0.004 |
+| **Random Forest**     | **0.917** | **0.977** |     0.769 | **0.861** |  **0.938 ± 0.004** |
 
 ## Modèle retenu
 
