@@ -1,5 +1,5 @@
 """
-Application Streamlit — Détection de Tweets Suspects
+Application Streamlit - Détection de Tweets Suspects
 Auteur : Alassane SOMA | Université Virtuelle du Burkina Faso (UV-BF) | 2026
 """
 import streamlit as st
@@ -31,7 +31,7 @@ def charger_modeles():
     return model, tfidf
 
 st.title(" Détection de Tweets Suspects")
-st.caption("Alassane SOMA | Université Virtuelle du Burkina Faso (UV-BF) | Examen ML 2026")
+st.caption("Alassane SOMA | Université Virtuelle du Burkina Faso (UV-BF) | ML 2026")
 st.markdown("---")
 st.markdown("Entrez un tweet en **anglais** pour analyser s'il est suspect ou normal.")
 
@@ -64,10 +64,10 @@ if analyser:
 
             st.markdown("---")
             if pred == 1:
-                st.error(f" **TWEET SUSPECT** — Score : {prob_s:.1%}")
+                st.error(f" **TWEET SUSPECT** - Score : {prob_s:.1%}")
                 st.progress(prob_s)
             else:
-                st.success(f" **TWEET NORMAL** — Score de normalité : {prob_n:.1%}")
+                st.success(f" **TWEET NORMAL** - Score de normalité : {prob_n:.1%}")
                 st.progress(prob_n)
 
             with st.expander(" Détails"):
