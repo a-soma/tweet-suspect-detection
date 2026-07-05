@@ -1,0 +1,53 @@
+schema: '2.0'
+stages:
+  preprocess:
+    cmd: python src/preprocess.py
+    deps:
+    - path: data/tweets_suspect.csv
+      hash: md5
+      md5: 60e5f26c964cb0a766047fd993102170
+      size: 4695170
+    - path: src/preprocess.py
+      hash: md5
+      md5: e39670b59d07f3078028a18746f85922
+      size: 2493
+    outs:
+    - path: data/tweets_preprocessed.csv
+      hash: md5
+      md5: 944a9eb140c408ff6e0e7dbac09c2251
+      size: 7700761
+  train:
+    cmd: python src/train.py
+    deps:
+    - path: data/tweets_preprocessed.csv
+      hash: md5
+      md5: 944a9eb140c408ff6e0e7dbac09c2251
+      size: 7700761
+    - path: src/train.py
+      hash: md5
+      md5: 4cedb0d9c930093ca8d3f975d9ae491b
+      size: 4325
+    outs:
+    - path: models/best_model.pkl
+      hash: md5
+      md5: 00336176f3ba2b67d916c462323eb288
+      size: 33831562
+    - path: models/results.json
+      hash: md5
+      md5: a4be3fab773d61424df7c916d8ed52a5
+      size: 993
+    - path: models/tfidf_vectorizer.pkl
+      hash: md5
+      md5: 0a49b18951f93404c3f9db959a6c1345
+      size: 345681
+  evaluate:
+    cmd: python src/evaluate.py
+    deps:
+    - path: models/results.json
+      hash: md5
+      md5: a4be3fab773d61424df7c916d8ed52a5
+      size: 993
+    - path: src/evaluate.py
+      hash: md5
+      md5: b704084091f187891a83ce3de4442b55
+      size: 1158
