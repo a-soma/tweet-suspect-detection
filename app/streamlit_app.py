@@ -36,7 +36,7 @@ st.markdown("---")
 st.markdown("Entrez un tweet en **anglais** pour analyser s'il est suspect ou normal.")
 
 tweet_input = st.text_area(" Tweet à analyser :",
-    placeholder="Ex: I hate everything and everyone around me",
+    placeholder="Ex: Win a free iPhone today! Click this suspicious link now",
     height=120)
 
 col1, col2, col3 = st.columns([1, 2, 1])
