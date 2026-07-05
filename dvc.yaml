@@ -1,14 +1,14 @@
 stages:
   preprocess:
-    cmd: python src/preprocess.py data/tweets_dataset.csv data/tweets_preprocessed.csv
+    cmd: python src/preprocess.py
     deps:
       - src/preprocess.py
-      - data/tweets_dataset.csv
+      - data/tweets_suspect.csv
     outs:
       - data/tweets_preprocessed.csv
 
   train:
-    cmd: python src/train.py data/tweets_preprocessed.csv models/
+    cmd: python src/train.py
     deps:
       - src/train.py
       - data/tweets_preprocessed.csv
@@ -20,7 +20,7 @@ stages:
           cache: false
 
   evaluate:
-    cmd: python src/evaluate.py models/results.json
+    cmd: python src/evaluate.py
     deps:
       - src/evaluate.py
       - models/results.json
